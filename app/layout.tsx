@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/sidebar/sidebar";
 import GlobalStyleProvider from "./providers/global-style-provider";
+import ContextProvider from "./providers/context-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +19,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+        />
+      </head>
       <body className={inter.className}>
-        <GlobalStyleProvider>
-          <Sidebar />
-          {children}
-        </GlobalStyleProvider>
+        <ContextProvider>
+          <GlobalStyleProvider>
+            <Sidebar />
+            {children}
+          </GlobalStyleProvider>
+        </ContextProvider>
       </body>
     </html>
   );
