@@ -54,6 +54,8 @@ const TaskItemStyled = styled.div`
 
   .date {
     margin-top: auto;
+    color: ${(props) => props.theme.colorGrey2};
+    font-size: 14px;
   }
 
   > h1 {
@@ -74,6 +76,11 @@ const TaskItemStyled = styled.div`
       i {
         font-size: 1.4rem;
         color: ${(props) => props.theme.colorGrey2};
+        transition: all 0.5s ease;
+
+        &:hover {
+          color: #ffff;
+        }
       }
     }
 
@@ -85,12 +92,13 @@ const TaskItemStyled = styled.div`
     .incomplete {
       display: inline-block;
       padding: 0.4rem 1rem;
-      background: ${(props) => props.theme.colorDanger};
+      background: transparent;
       border-radius: 30px;
+      border: 1px solid #ffff;
     }
 
     .completed {
-      background: ${(props) => props.theme.colorGreenDark} !important;
+      background: ${(props) => props.theme.colorPrimary} !important;
     }
   }
 `;
