@@ -3,6 +3,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import themes from "./themes";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useUser } from "@clerk/nextjs";
 
 export const GlobalContext = createContext();
 export const GlobalUpdateContext = createContext();
@@ -11,6 +12,8 @@ export const GlobalProvider = ({ children }) => {
   const [selectedTheme, setSelectedThem] = useState(0);
   const [isLoading, setisLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
+
+  const { user } = useUser();
 
   const theme = themes[selectedTheme];
 
@@ -29,8 +32,8 @@ export const GlobalProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    allTasks();
-  }, []);
+    if (user) allTasks();
+  }, [user]);
 
   return (
     <GlobalContext.Provider
