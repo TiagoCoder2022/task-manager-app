@@ -31,7 +31,7 @@ const TaskItem = ({
         {isCompleted ? (
           <button className="completed">Completed</button>
         ) : (
-          <button className="incomplete">Incompleted</button>
+          <button className="incomplete">Incomplete</button>
         )}
         <button className="edit">{edit}</button>
         <button className="delete">{trash}</button>
