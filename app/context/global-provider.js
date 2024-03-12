@@ -31,6 +31,20 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const deleteTask = async (id) => {
+    try {
+      const res = await axios.delete(`/api/tasks/${id}`);
+      toast.success("Task deleted");
+
+      allTasks();
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
+  const completedTasks = tasks.filter((task) => task.isCompleted === true);
+
   useEffect(() => {
     if (user) allTasks();
   }, [user]);
@@ -40,6 +54,9 @@ export const GlobalProvider = ({ children }) => {
       value={{
         theme,
         tasks,
+        deleteTask,
+        isLoading,
+        completedTasks,
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>

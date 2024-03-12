@@ -4,6 +4,7 @@ import { useGlobalState } from "@/app/context/global-provider";
 import { edit, trash } from "@/app/utils/Icons";
 import styled from "styled-components";
 import formatDate from "@/app/utils/formatDate";
+import CreateContent from "../modals/create-content";
 
 interface TaskItemProps {
   title: string;
@@ -21,7 +22,7 @@ const TaskItem = ({
 
   id,
 }: TaskItemProps) => {
-  const { theme } = useGlobalState();
+  const { theme, deleteTask } = useGlobalState();
   return (
     <TaskItemStyled theme={theme}>
       <h1>{title}</h1>
@@ -34,7 +35,14 @@ const TaskItem = ({
           <button className="incomplete">Incomplete</button>
         )}
         <button className="edit">{edit}</button>
-        <button className="delete">{trash}</button>
+        <button
+          className="delete"
+          onClick={() => {
+            deleteTask(id);
+          }}
+        >
+          {trash}
+        </button>
       </div>
     </TaskItemStyled>
   );
@@ -99,6 +107,7 @@ const TaskItemStyled = styled.div`
 
     .completed {
       background: ${(props) => props.theme.colorPrimary} !important;
+      border: none;
     }
   }
 `;
