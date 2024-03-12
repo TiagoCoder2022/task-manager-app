@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-
 import { GlobalProvider } from "../context/global-provider";
+import { Toaster } from "react-hot-toast";
 
 interface ContextProviderProps {
   children: React.ReactNode;
@@ -22,7 +22,10 @@ function ContextProvider({ children }: ContextProviderProps) {
 
   return (
     <div>
-      <GlobalProvider>{children}</GlobalProvider>
+      <GlobalProvider>
+        <Toaster />
+        {children}
+      </GlobalProvider>
     </div>
   );
 }
