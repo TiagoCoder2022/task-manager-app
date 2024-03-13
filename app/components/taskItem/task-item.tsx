@@ -22,7 +22,7 @@ const TaskItem = ({
 
   id,
 }: TaskItemProps) => {
-  const { theme, deleteTask } = useGlobalState();
+  const { theme, deleteTask, updateTask } = useGlobalState();
   return (
     <TaskItemStyled theme={theme}>
       <h1>{title}</h1>
@@ -30,9 +30,33 @@ const TaskItem = ({
       <p className="date">{formatDate(date)}</p>
       <div className="task-footer">
         {isCompleted ? (
-          <button className="completed">Completed</button>
+          <button
+            className="completed"
+            onClick={() => {
+              const task = {
+                id,
+                isCompleted: !isCompleted,
+              };
+
+              updateTask(task);
+            }}
+          >
+            Completed
+          </button>
         ) : (
-          <button className="incomplete">Incomplete</button>
+          <button
+            className="incomplete"
+            onClick={() => {
+              const task = {
+                id,
+                isCompleted: !isCompleted,
+              };
+
+              updateTask(task);
+            }}
+          >
+            Incomplete
+          </button>
         )}
         <button className="edit">{edit}</button>
         <button
