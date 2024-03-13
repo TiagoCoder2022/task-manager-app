@@ -9,14 +9,15 @@ export const GlobalContext = createContext();
 export const GlobalUpdateContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
+  const { user } = useUser();
+
   const [selectedTheme, setSelectedThem] = useState(0);
   const [isLoading, setisLoading] = useState(false);
-  const [tasks, setTasks] = useState([]);
   const [modal, setModal] = useState(false);
 
-  const theme = themes[selectedTheme];
+  const [tasks, setTasks] = useState([]);
 
-  const { user } = useUser();
+  const theme = themes[selectedTheme];
 
   const openModal = () => {
     setModal(true);
@@ -85,6 +86,7 @@ export const GlobalProvider = ({ children }) => {
         updateTask,
         openModal,
         closeModal,
+        modal,
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>

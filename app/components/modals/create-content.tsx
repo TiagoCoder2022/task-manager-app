@@ -7,6 +7,7 @@ import styled from "styled-components";
 // import Button from "../Button/Button";
 import { add, plus } from "@/app/utils/Icons";
 import { useGlobalState } from "@/app/context/global-provider";
+import Button from "../button/button";
 
 function CreateContent() {
   const [title, setTitle] = useState("");
@@ -59,8 +60,8 @@ function CreateContent() {
 
       if (!res.data.error) {
         toast.success("Task created successfully.");
-        // allTasks();
-        // closeModal();
+        allTasks();
+        closeModal();
       }
     } catch (error) {
       toast.error("Something went wrong.");
@@ -125,7 +126,7 @@ function CreateContent() {
       </div>
 
       <div className="submit-btn flex justify-end">
-        {/* <Button
+        <Button
           type="submit"
           name="Create Task"
           icon={add}
@@ -134,8 +135,7 @@ function CreateContent() {
           fw={"500"}
           fs={"1.2rem"}
           background={"rgb(0, 163, 255)"}
-        /> */}
-        <button type="submit">Send</button>
+        />
       </div>
     </CreateContentStyled>
   );
