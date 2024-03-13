@@ -12,16 +12,24 @@ export const GlobalProvider = ({ children }) => {
   const [selectedTheme, setSelectedThem] = useState(0);
   const [isLoading, setisLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [modal, setModal] = useState(false);
+
+  const theme = themes[selectedTheme];
 
   const { user } = useUser();
 
-  const theme = themes[selectedTheme];
+  const openModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   const allTasks = async () => {
     setisLoading(true);
     try {
       const res = await axios.get("/api/tasks");
-      console.log(res.data);
 
       setTasks(res.data);
       setisLoading(false);
@@ -43,7 +51,22 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const updateTask = async (task) => {
+    try {
+      const res = await axios.put(`/api/tasks`, task);
+
+      toast.success("Task updated");
+
+      allTasks();
+    } catch (error) {
+      console.log(error);
+      toast.error("Somethin went wrong");
+    }
+  };
+
   const completedTasks = tasks.filter((task) => task.isCompleted === true);
+  const importantTasks = tasks.filter((task) => task.isImportant === true);
+  const incompleteTasks = tasks.filter((task) => task.isCompleted === false);
 
   useEffect(() => {
     if (user) allTasks();
@@ -57,6 +80,11 @@ export const GlobalProvider = ({ children }) => {
         deleteTask,
         isLoading,
         completedTasks,
+        importantTasks,
+        incompleteTasks,
+        updateTask,
+        openModal,
+        closeModal,
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>
