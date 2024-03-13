@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import styled from "styled-components";
 import { useGlobalState } from "@/app/context/global-provider";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import { usePathname, useRouter } from "next/navigation";
 import Button from "../button/button";
-import { useClerk, useUser } from "@clerk/nextjs";
+import { UserButton, useClerk, useUser } from "@clerk/nextjs";
 import { logout } from "@/app/utils/Icons";
 
 const Sidebar = () => {
@@ -16,6 +16,12 @@ const Sidebar = () => {
   const { signOut } = useClerk();
 
   const { user } = useUser();
+
+  const { firstName, lastName, imageUrl } = user || {
+    firstName: "",
+    lastName: "",
+    imageUrl: "",
+  };
 
   const router = useRouter();
   const pathname = usePathname();
@@ -29,11 +35,14 @@ const Sidebar = () => {
       <div className="profile">
         <div className="profile-overlay"></div>
         <div className="image">
-          <Image src="/avatar1.png" width={70} height={70} alt="profile" />
+          <Image src={imageUrl} width={70} height={70} alt="profile" />
+        </div>
+        <div className="user-btn absolute z-20 top-0 w-full h-full">
+          <UserButton />
         </div>
         <h1>
-          <span>John</span>
-          <span>Doe</span>
+          <span>{firstName}</span>
+          <span>{lastName}</span>
         </h1>
       </div>
       <ul className="nav-items">
@@ -83,6 +92,25 @@ const SidebarStyled = styled.nav`
   justify-content: space-between;
 
   color: ${(props) => props.theme.colorGrey3};
+
+  .user-btn {
+    .cl-rootBox {
+      width: 100%;
+      height: 100%;
+
+      .cl-userButtonBox {
+        width: 100%;
+        height: 100%;
+
+        .cl-userButtonTrigger {
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+        }
+      }
+    }
+  }
+
   .profile {
     margin: 1.5rem;
     padding: 1rem 0.8rem;
