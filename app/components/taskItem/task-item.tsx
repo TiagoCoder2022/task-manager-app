@@ -73,11 +73,10 @@ const TaskItem = ({
 };
 
 const TaskItemStyled = styled.div`
-  padding: 1.2rem 1rem;
+  padding: 1.5rem 1.5rem;
   border-radius: 1rem;
-  background-color: ${(props) => props.theme.borderColor2};
+  background-color: ${(props) => props.theme.activeNavLink};
   box-shadow: ${(props) => props.theme.shadow7};
-  border: 2px solid ${(props) => props.theme.borderColor2};
 
   height: 16rem;
   display: flex;

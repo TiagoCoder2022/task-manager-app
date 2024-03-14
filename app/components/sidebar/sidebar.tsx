@@ -31,8 +31,8 @@ const Sidebar = () => {
   };
 
   return (
-    <SidebarStyled theme={theme}>
-      <div className="profile">
+    <SidebarStyled theme={theme} className="bg-[#202020]">
+      <div className="profile bg-[#1a1a1a]">
         <div className="profile-overlay"></div>
         <div className="image">
           <Image src={imageUrl} width={70} height={70} alt="profile" />
@@ -83,8 +83,7 @@ const Sidebar = () => {
 const SidebarStyled = styled.nav`
   position: relative;
   width: ${(props) => props.theme.sidebarWidth};
-  background-color: ${(props) => props.theme.colorBg2};
-  border: 2px solid ${(props) => props.theme.borderColor2};
+
   border-radius: 1rem;
 
   display: flex;
@@ -248,7 +247,7 @@ const SidebarStyled = styled.nav`
 
     i,
     a {
-      color: ${(props) => props.theme.colorIcons2};
+      color: #fff;
     }
   }
 
