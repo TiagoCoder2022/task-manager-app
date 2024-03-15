@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 // import Button from "../Button/Button";
-import { add, plus } from "@/app/utils/Icons";
+import { add, plus } from "@/app/utils/icons";
 import { useGlobalState } from "@/app/context/global-provider";
 import Button from "../button/button";
 
