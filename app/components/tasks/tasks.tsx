@@ -103,7 +103,7 @@ const TaskStyled = styled.div`
   }
 
   .create-task {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
@@ -119,6 +119,10 @@ const TaskStyled = styled.div`
     &:hover {
       background-color: ${(props) => props.theme.colorGrey5};
       color: ${(props) => props.theme.colorGrey0};
+    }
+
+    @media screen and (max-width: 768px) {
+      display: none;
     }
   }
 `;
