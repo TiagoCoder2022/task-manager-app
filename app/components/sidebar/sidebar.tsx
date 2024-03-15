@@ -9,10 +9,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Button from "../button/button";
 import { UserButton, useClerk, useUser } from "@clerk/nextjs";
-import { logout } from "@/app/utils/Icons";
+import { arrowLeft, bars, logout } from "@/app/utils/Icons";
 
 const Sidebar = () => {
-  const { theme } = useGlobalState();
+  const { theme, collapsed, collapseMenu } = useGlobalState();
   const { signOut } = useClerk();
 
   const { user } = useUser();
@@ -31,7 +31,10 @@ const Sidebar = () => {
   };
 
   return (
-    <SidebarStyled theme={theme} className="bg-[#202020]">
+    <SidebarStyled theme={theme} className="bg-[#202020]" collapsed={collapsed}>
+      <button className="toggle-nav" onClick={collapseMenu}>
+        {collapsed ? bars : arrowLeft}
+      </button>
       <div className="profile bg-[#1a1a1a]">
         <div className="profile-overlay"></div>
         <div className="image">
@@ -53,6 +56,7 @@ const Sidebar = () => {
               className={`nav-item ${pathname === link ? "active" : ""} `}
               onClick={() => {
                 handleClick(link);
+                collapseMenu();
               }}
               key={item.title}
             >
@@ -80,7 +84,7 @@ const Sidebar = () => {
   );
 };
 
-const SidebarStyled = styled.nav`
+const SidebarStyled = styled.nav<{ collapsed: boolean }>`
   position: relative;
   width: ${(props) => props.theme.sidebarWidth};
 
@@ -91,6 +95,35 @@ const SidebarStyled = styled.nav`
   justify-content: space-between;
 
   color: ${(props) => props.theme.colorGrey3};
+  box-shadow: 6px 0 5px -2px #090909;
+
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    height: calc(100vh - 2rem);
+    z-index: 100;
+
+    transition: all 0.3s cubic-bezier(0.53, 0.21, 0, 1);
+    transform: ${(props) =>
+      props.collapsed ? "translate(-107%)" : "translateX(0)"};
+
+    .toggle-nav {
+      display: block !important;
+    }
+  }
+
+  .toggle-nav {
+    display: none;
+    position: absolute;
+    right: -60px;
+    top: 1.8rem;
+    padding: 0.8rem 0.9rem;
+
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+
+    background-color: #202020;
+    box-shadow: 6px 0 5px -2px #090909;
+  }
 
   .user-btn {
     .cl-rootBox {
