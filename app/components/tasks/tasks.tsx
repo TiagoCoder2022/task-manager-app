@@ -19,6 +19,10 @@ const Tasks = ({ title, tasks }: Props) => {
       {modal && <Modal content={<CreateContent />} />}
       <h1>{title}</h1>
 
+      <button className="btn-rounded" onClick={openModal}>
+        {plus}
+      </button>
+
       <div className="tasks grid">
         {tasks.map((task) => (
           <TaskItem
@@ -45,11 +49,37 @@ const TaskStyled = styled.div`
   background-color: #202020;
   border-radius: 1rem;
   height: 100%;
+  box-shadow: #090909;
 
   overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 0.5rem;
+  }
+
+  .btn-rounded {
+    position: fixed;
+    top: 4.9rem;
+    right: 5.1rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+
+    background-color: ${(props) => props.theme.colorBg};
+
+    box-shadow: 6px 0 5px -2px #090909;
+    color: ${(props) => props.theme.colorGrey2};
+    font-size: 1.4rem;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 768px) {
+      display: flex;
+      top: 3rem;
+      right: 3.5rem;
+    }
   }
 
   .tasks {
@@ -73,7 +103,7 @@ const TaskStyled = styled.div`
   }
 
   .create-task {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
