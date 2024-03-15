@@ -76,7 +76,7 @@ const TaskItemStyled = styled.div`
   padding: 1.5rem 1.5rem;
   border-radius: 1rem;
   background-color: ${(props) => props.theme.activeNavLink};
-  box-shadow: ${(props) => props.theme.shadow7};
+  box-shadow: 6px 0 5px -2px #090909;
 
   height: 16rem;
   display: flex;
