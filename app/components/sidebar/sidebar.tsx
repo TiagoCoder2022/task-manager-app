@@ -9,7 +9,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Button from "../button/button";
 import { UserButton, useClerk, useUser } from "@clerk/nextjs";
-import { arrowLeft, bars, logout } from "@/app/utils/Icons";
+import { arrowLeft, bars, logout } from "@/app/utils/icons";
 
 const Sidebar = () => {
   const { theme, collapsed, collapseMenu } = useGlobalState();

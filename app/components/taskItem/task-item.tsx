@@ -1,7 +1,7 @@
 "use client";
 
 import { useGlobalState } from "@/app/context/global-provider";
-import { edit, trash } from "@/app/utils/Icons";
+import { edit, trash } from "@/app/utils/icons";
 import styled from "styled-components";
 import formatDate from "@/app/utils/formatDate";
 import CreateContent from "../modals/create-content";
