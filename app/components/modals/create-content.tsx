@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 // import Button from "../Button/Button";
-import { add, plus } from "@/app/utils/icons";
+import { add, close } from "@/app/utils/icons";
 import { useGlobalState } from "@/app/context/global-provider";
 import Button from "../button/button";
 
@@ -63,6 +63,8 @@ function CreateContent() {
         allTasks();
         closeModal();
       }
+
+      console.log(res.data);
     } catch (error) {
       toast.error("Something went wrong.");
       console.log(error);
@@ -71,7 +73,12 @@ function CreateContent() {
 
   return (
     <CreateContentStyled onSubmit={handleSubmit} theme={theme}>
-      <h1>Create a Task</h1>
+      <div className="flex justify-between">
+        <h1 className="text-[1.6rem] font-bold">Create a Task</h1>
+        <button className="text-[1.6rem]" onClick={closeModal}>
+          {close}
+        </button>
+      </div>
       <div className="input-control">
         <label htmlFor="title">Title</label>
         <input
@@ -142,16 +149,11 @@ function CreateContent() {
 }
 
 const CreateContentStyled = styled.form`
-  > h1 {
-    font-size: clamp(1.2rem, 5vw, 1.6rem);
-    font-weight: 600;
-  }
-
   color: ${(props) => props.theme.colorGrey1};
 
   .input-control {
     position: relative;
-    margin: 1.6rem 0;
+    margin: 1rem 0;
     font-weight: 500;
 
     @media screen and (max-width: 450px) {
@@ -171,7 +173,7 @@ const CreateContentStyled = styled.form`
     input,
     textarea {
       width: 100%;
-      padding: 1rem;
+      padding: 0.5rem;
 
       resize: none;
       background-color: ${(props) => props.theme.colorGreyDark};
