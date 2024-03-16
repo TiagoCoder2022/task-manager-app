@@ -45,17 +45,11 @@ const ModalStyled = styled.div`
   .modal-content {
     padding: 2rem;
     position: relative;
-    max-width: 630px;
+    max-width: 550px;
     width: 100%;
     z-index: 100;
 
     margin: 0 1rem;
-
-    padding: 2rem;
-    position: relative;
-    max-width: 630px;
-    width: 100%;
-    z-index: 100;
 
     border-radius: 1rem;
     background-color: ${(props) => props.theme.colorBg2};
