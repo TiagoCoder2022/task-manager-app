@@ -4,6 +4,7 @@ import themes from "./themes";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/nextjs";
+import { TaskType } from "@/app/types/task";
 
 export const GlobalContext = createContext();
 export const GlobalUpdateContext = createContext();
@@ -15,12 +16,16 @@ export const GlobalProvider = ({ children }) => {
   const [isLoading, setisLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState(null);
 
   const [tasks, setTasks] = useState([]);
 
   const theme = themes[selectedTheme];
 
-  const openModal = () => {
+  const openModal = (mode = "create", task = null) => {
+    setIsEditing(mode === "edit");
+    setTaskToEdit(task);
     setModal(true);
   };
 
@@ -101,6 +106,8 @@ export const GlobalProvider = ({ children }) => {
         allTasks,
         collapsed,
         collapseMenu,
+        isEditing,
+        taskToEdit,
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>

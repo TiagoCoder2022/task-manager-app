@@ -21,7 +21,7 @@ const TaskItem = ({
 
   id,
 }: TaskItemProps) => {
-  const { theme, deleteTask, updateTask } = useGlobalState();
+  const { theme, deleteTask, updateTask, openModal } = useGlobalState();
   return (
     <TaskItemStyled theme={theme}>
       <h1>{title}</h1>
@@ -57,7 +57,20 @@ const TaskItem = ({
             Incomplete
           </button>
         )}
-        <button className="edit">{edit}</button>
+        <button
+          className="edit"
+          onClick={() =>
+            openModal("edit", {
+              id,
+              title,
+              description,
+              date,
+              isCompleted,
+            })
+          }
+        >
+          {edit}
+        </button>
         <button
           className="delete"
           onClick={() => {

@@ -1,7 +1,7 @@
 "use client";
 // import { useGlobalState } from "@/app/context/globalProvider";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 // import Button from "../Button/Button";
@@ -16,7 +16,25 @@ function CreateContent() {
   const [completed, setCompleted] = useState(false);
   const [important, setImportant] = useState(false);
 
-  const { theme, allTasks, closeModal } = useGlobalState();
+  const { theme, allTasks, closeModal, isEditing, taskToEdit } =
+    useGlobalState();
+
+  useEffect(() => {
+    if (isEditing && taskToEdit) {
+      setTitle(taskToEdit.title);
+      setDescription(taskToEdit.description);
+      setDate(taskToEdit.date);
+      setCompleted(taskToEdit.isCompleted);
+      setImportant(taskToEdit.important || false);
+    } else {
+      // Resetar campos ao abrir para criar uma nova tarefa
+      setTitle("");
+      setDescription("");
+      setDate("");
+      setCompleted(false);
+      setImportant(false);
+    }
+  }, [isEditing, taskToEdit]);
 
   const handleChange = (name: string) => (e: any) => {
     switch (name) {
@@ -52,19 +70,22 @@ function CreateContent() {
     };
 
     try {
-      const res = await axios.post("/api/tasks", task);
+      let res;
+      if (isEditing && taskToEdit) {
+        res = await axios.put(`/api/tasks/${taskToEdit.id}`, task);
+      } else {
+        res = await axios.post("/api/tasks", task);
+      }
 
       if (res.data.error) {
         toast.error(res.data.error);
-      }
-
-      if (!res.data.error) {
-        toast.success("Task created successfully.");
+      } else {
+        toast.success(
+          `Task ${isEditing ? "updated" : "created"} successfully.`
+        );
         allTasks();
         closeModal();
       }
-
-      console.log(res.data);
     } catch (error) {
       toast.error("Something went wrong.");
       console.log(error);
@@ -74,7 +95,9 @@ function CreateContent() {
   return (
     <CreateContentStyled onSubmit={handleSubmit} theme={theme}>
       <div className="flex justify-between">
-        <h1 className="text-[1.6rem] font-bold">Create a Task</h1>
+        <h1 className="text-[1.6rem] font-bold">
+          {isEditing ? "Edit Task" : "Create a Task"}
+        </h1>
         <button className="text-[1.6rem]" onClick={closeModal}>
           {close}
         </button>
@@ -135,7 +158,7 @@ function CreateContent() {
       <div className="submit-btn flex justify-end">
         <Button
           type="submit"
-          name="Create Task"
+          name={isEditing ? "Edit Task" : "Create Task"}
           icon={add}
           padding={"0.8rem 2rem"}
           borderRad={"0.8rem"}
